@@ -1,3 +1,9 @@
+/*
+ * Name: Lidor Malichi
+ * ID: 318515947
+ * Email: lidor673@gmail.com
+ */
+
 #ifndef TREE_H
 #define TREE_H
 

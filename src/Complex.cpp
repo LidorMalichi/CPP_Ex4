@@ -1,3 +1,9 @@
+/*
+ * Name: Lidor Malichi
+ * ID: 318515947
+ * Email: lidor673@gmail.com
+ */
+
 #include "../include/Complex.hpp"
 
 Complex::Complex(const double &re, const double &im) : _re(re), _im(im){}

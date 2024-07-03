@@ -1,5 +1,7 @@
-/**
- * Demo app for Ex4
+/*
+ * Name: Lidor Malichi
+ * ID: 318515947
+ * Email: lidor673@gmail.com
  */
 #include <iostream>
 #include <string>

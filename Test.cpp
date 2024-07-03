@@ -1,3 +1,9 @@
+/*
+ * Name: Lidor Malichi
+ * ID: 318515947
+ * Email: lidor673@gmail.com
+ */
+
 #include "include/doctest.h"
 #include "include/Tree.hpp"
 #include "include/Node.hpp"

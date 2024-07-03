@@ -1,3 +1,9 @@
+/*
+ * Name: Lidor Malichi
+ * ID: 318515947
+ * Email: lidor673@gmail.com
+ */
+
 #ifndef NODE_H
 #define NODE_H
 
