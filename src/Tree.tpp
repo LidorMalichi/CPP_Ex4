@@ -460,4 +460,84 @@ typename Tree<T, k>::MinHeapIterator Tree<T, k>::end_min_heap()
 {
     return MinHeapIterator(this->traversal_nodes.end());
 }
+
+template <typename T, std::size_t k>
+void Tree<T, k>::print() {
+    sf::RenderWindow window(sf::VideoMode(800, 600), "Binary Tree Display");
+        sf::Font font;
+        if (!font.loadFromFile("./Lato-BlackItalic.ttf")) {
+            throw std::runtime_error("Failed to load font!");
+            return;
+        }
+        window.clear(sf::Color::White);
+
+        // Pass the root node pointer directly
+        this->tree_paint(window, *this, root, 400, 50, 200, font);
+        window.display();
+
+        while (window.isOpen()) {
+            sf::Event event;
+            while (window.pollEvent(event)) {
+                if (event.type == sf::Event::Closed) {
+                    window.close();
+                }
+            }
+        }
+    
+}
+
+template<typename T, size_t k>
+void Tree<T, k>::tree_paint(sf::RenderWindow& window, Tree<T, k>& tree, Node<T>* node, float x, float y, int horizontal_gap, sf::Font& font){
+         if (!node) return;
+
+        // Drawing circle and lines...
+        sf::Color circleColor = sf::Color::Green; 
+        sf::Color outlineColor = sf::Color::Black; 
+        sf::Color textColor = sf::Color::Black; 
+
+        // Draw circle
+        sf::CircleShape circle(30); 
+        circle.setFillColor(circleColor);
+        circle.setOutlineThickness(2);
+        circle.setOutlineColor(outlineColor);
+        circle.setPosition(x, y);
+        window.draw(circle);
+
+        // Convert value to string with fixed precision
+        T value = node->get_value();
+        std::ostringstream oss;
+        oss.precision(1);
+        oss << std::fixed << value;
+        std::string str = oss.str();
+
+        // Draw text
+        sf::Text text(str, font, 20);
+        text.setFillColor(textColor);
+        sf::FloatRect textBounds = text.getLocalBounds();
+        text.setOrigin(textBounds.left + textBounds.width / 2.0f,
+                            textBounds.top + textBounds.height / 2.0f);
+        text.setPosition(x + circle.getRadius(), y + circle.getRadius());
+        window.draw(text);
+
+        // Draw lines to children
+        auto children = node->get_children();
+        int num_children = node->get_current_children();
+        if (num_children > 0) {
+            for (size_t i = 0; i < num_children; ++i) {
+                float child_x = x - horizontal_gap / 2 + i * horizontal_gap;
+                float child_y = y + 100;
+
+                sf::Vertex line[] = {
+                    sf::Vertex(sf::Vector2f(x + circle.getRadius(), y + 2 * circle.getRadius())),
+                    sf::Vertex(sf::Vector2f(child_x + circle.getRadius(), child_y))
+                };
+                line[0].color = sf::Color::Black;
+                line[1].color = sf::Color::Black;
+                window.draw(line, 2, sf::Lines);
+
+                tree_paint(window, tree, children[i], child_x, child_y, horizontal_gap / 2, font);
+            }
+        }
+    }
+
 #endif

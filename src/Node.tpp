@@ -5,7 +5,7 @@
 
 // Constructor
 template<typename T>
-Node<T>::Node(const T value, size_t max_children) : value(value), max_children(max_children), children(max_children, nullptr){}
+Node<T>::Node(const T value, size_t max_children) : value(value), max_children(max_children), current_children(0), children(max_children, nullptr){}
 
 // Copy constructor
 template<typename T>
@@ -14,6 +14,9 @@ Node<T>::Node(const Node<T>& other) : value(other.value), children(other.childre
 // Getters
 template<typename T>
 T Node<T>::get_value() const{return this->value;}
+
+template<typename T>
+int Node<T>::get_current_children(){return this->current_children;}
 
 template<typename T>
 vector<Node<T>*> Node<T>::get_children() const {return this->children;}
@@ -27,6 +30,7 @@ bool Node<T>::add_child(Node<T>* node)
         if(nullptr == this->children[i])
         {
             this->children[i] = node;
+            this->current_children++;
             return true;
         }
     }

@@ -7,6 +7,9 @@
 #include <algorithm>
 #include <stdexcept>
 #include "Node.hpp"
+#include <SFML/Graphics.hpp>
+#include <sstream>
+
 
 using namespace std;
 
@@ -107,6 +110,7 @@ class Tree
     MinHeapIterator begin_min_heap();
     MinHeapIterator end_min_heap();
 
+    void print();
     
     private:
 
@@ -125,7 +129,7 @@ class Tree
         static void minheap_traversal(Node<T>* node, vector<Node<T>*>& nodes);
         static void dfs_traversal(Node<T>* node, vector<Node<T>*>& nodes);
 
-
+        void tree_paint(sf::RenderWindow& window, Tree<T, k>& tree, Node<T>* node, float x, float y, int horizontal_gap, sf::Font& font);
 };
 
 #include "../src/Tree.tpp"

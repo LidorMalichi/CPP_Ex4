@@ -19,6 +19,8 @@ class Node
         // Get node value
         T get_value() const;
 
+        int get_current_children();
+
         vector<Node<T>*> get_children() const;
 
         bool add_child(Node<T>* child);
@@ -28,6 +30,8 @@ class Node
         T value;
 
         size_t max_children;
+
+        size_t current_children;
 
         vector<Node<T>*> children;
         

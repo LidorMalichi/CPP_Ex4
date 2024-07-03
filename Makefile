@@ -1,5 +1,6 @@
 CXX=clang++
-CXXFLAGS=-std=c++17 -Werror -Wsign-conversion -g
+CXXFLAGS=-std=c++17 -Werror -g
+LDFLAGS = -lsfml-graphics -lsfml-window -lsfml-system
 VALGRIND_FLAGS=-v --leak-check=full --show-leak-kinds=all  --error-exitcode=99
  
 SOURCES=src/Complex.cpp
@@ -8,17 +9,17 @@ OBJECTS=$(subst .cpp,.o,$(SOURCES))
 
 .PHONY: clean tidy valgrind
 
-run: demo
+tree: demo
 	./$^
 
 runtests: test
 	./$^
 
 demo: main.o $(OBJECTS)
-	$(CXX) $(CXXFLAGS) -o $@ $^
+	$(CXX) $(CXXFLAGS) -o $@ $^ $(LDFLAGS)
 
-#test: TestCounter.o Test.o $(OBJECTS)
-	#$(CXX) $(CXXFLAGS) -o $@ $^
+test: TestCounter.o Test.o $(OBJECTS)
+	$(CXX) $(CXXFLAGS) -o $@ $^
 
 tidy:
 	clang-tidy $(SOURCES) -checks=bugprone-*,clang-analyzer-*,cppcoreguidelines-*,performance-*,portability-*,readability-*,-cppcoreguidelines-pro-bounds-pointer-arithmetic,-cppcoreguidelines-owning-memory --warnings-as-errors=-* --
@@ -31,4 +32,4 @@ valgrind: demo test
 	$(CXX) $(CXXFLAGS) --compile $< -o $@
 
 clean:
-	rm -f *.o demo $(OBJECTS)
+	rm -f *.o demo test $(OBJECTS)

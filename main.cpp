@@ -67,6 +67,8 @@ int main()
     } // prints: 1.1, 1.2, 1.3, 1.4, 1.5, 1.6
 
 
+    tree.print();
+
     //cout << tree; // Should print the graph using GUI.
 
     Tree<double,3> three_ary_tree; // 3-ary tree.
