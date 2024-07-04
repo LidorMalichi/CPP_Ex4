@@ -1,8 +1,4 @@
-/*
- * Name: Lidor Malichi
- * ID: 318515947
- * Email: lidor673@gmail.com
- */
+
 
 CXX=clang++
 CXXFLAGS=-std=c++17 -Werror -g

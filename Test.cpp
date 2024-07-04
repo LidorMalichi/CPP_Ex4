@@ -129,10 +129,62 @@ TEST_CASE("Tree Traversals") {
     SUBCASE("DFS Traversal") {
         std::vector<int> values;
         for (auto it = tree.begin_dfs_scan(); it != tree.end_dfs_scan(); ++it) {
-            std::cout<< it->get_value()<<endl;
             values.push_back(it->get_value());
         }
-        CHECK(values == std::vector<int>{5, 15, 10});
+        CHECK(values == std::vector<int>{10,15,5});
     }
 }
 
+TEST_CASE("Testing non-binary tree with k=3")
+{
+    Tree<int, 3> tree;
+
+    Node<int> root(1);
+    Node<int> child1(2);
+    Node<int> child2(3);
+    Node<int> child3(4);
+    Node<int> child4(5);
+    Node<int> child5(6);
+    Node<int> child6(7);
+
+    tree.add_root(root);
+
+    CHECK(tree.add_sub_node(root, child1));
+    CHECK(tree.add_sub_node(root, child2));
+    CHECK(tree.add_sub_node(root, child3));
+    CHECK(tree.add_sub_node(child1, child4));
+    CHECK(tree.add_sub_node(child1, child5));
+    CHECK(tree.add_sub_node(child2, child6));
+
+    SUBCASE("DFS Traversal")
+    {
+        auto it = tree.begin_dfs_scan();
+        auto end = tree.end_dfs_scan();
+        
+        std::vector<int> dfs_result;
+        while (it != end)
+        {
+            dfs_result.push_back(it->get_value());
+            ++it;
+        }
+
+        std::vector<int> expected_dfs = {1, 4, 3, 7, 2, 6, 5}; // Expected DFS order
+        CHECK(dfs_result == expected_dfs);
+    }
+
+    SUBCASE("BFS Traversal")
+    {
+        auto it = tree.begin_bfs_scan();
+        auto end = tree.end_bfs_scan();
+        
+        std::vector<int> bfs_result;
+        while (it != end)
+        {
+            bfs_result.push_back(it->get_value());
+            ++it;
+        }
+
+        std::vector<int> expected_bfs = {1, 2, 3, 4, 5, 6, 7}; // Expected BFS order
+        CHECK(bfs_result == expected_bfs);
+    }
+}
